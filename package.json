@@ -9,10 +9,12 @@
   "devDependencies": {
     "@playwright/test": "^1.49.1",
     "@types/node": "^22.10.5",
+    "monocart-reporter": "^2.9.13",
     "typescript": "^5.5.3"
   },
   "private": true,
   "dependencies": {
+    "@estruyf/github-actions-reporter": "^1.9.2",
     "dotenv": "^16.4.7"
   }
 }

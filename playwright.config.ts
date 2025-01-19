@@ -30,7 +30,14 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+    ['list'],
+    ['json', { outputFile: 'reports/json-report/test-results.json' }],
+    ['html', { outputFolder: 'reports/html-report/', open: 'never' }],
+    ['junit', { outputFile: 'reports/junit-report/test-results.xml' }],
+    ['@estruyf/github-actions-reporter'],
+    ['monocart-reporter', { name: "Monocart Report", outputFile: 'reports/monocart-report/index.html' }]
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
