@@ -6,5 +6,5 @@ test("first", async ({ page }) => {
 })
 
 test("has title", async ({ page }) => {
-    await expect(await page.title()).toHaveTitle("Users app");
+    await expect(page).toHaveTitle('Users app');
 })
