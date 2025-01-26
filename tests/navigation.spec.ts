@@ -15,7 +15,7 @@ import { test, expect } from "@playwright/test";
             const tabClassAttribute = await tab.getAttribute('class');
 
             await expect(tab).toBeAttached();
-            await expect(tab).toHaveCount(1);
+            await expect(tab).toHaveCount(2);
             await expect(tab).toBeVisible();
             await expect(tab).toBeEnabled();
             expect(tabClassAttribute).toStrictEqual(`${expected}`);
