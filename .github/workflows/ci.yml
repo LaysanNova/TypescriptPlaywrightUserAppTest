@@ -34,7 +34,7 @@ jobs:
         id: cache-playwright-browsers
         uses: actions/cache@v4
         with:
-          path: ~/.cache/ms-playwright/
+          path: ~/.cache/1/ms-playwright/
           key: playwright-browsers-${{ env.PLAYWRIGHT_VERSION }}
 
       - name: Install Playwright Browsers
