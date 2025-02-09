@@ -10,9 +10,7 @@ tests/.DS_Store
 /allure-results/
 /tests-examples/
 /reports/
-
+.env
 
 des-help
 playwright.config.reena.ts
-
-.env
