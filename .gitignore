@@ -3,7 +3,7 @@ node_modules/
 /playwright-report/
 /blob-report/
 /playwright/.cache/
-.env
+
 .DS_Store
 tests/.DS_Store
 .idea/
@@ -11,5 +11,6 @@ tests/.DS_Store
 /tests-examples/
 /reports/
 
-
+.env
 des-help
+playwright.config.reena.ts
