@@ -6,7 +6,14 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
-    "outDir": "dist"
-  },
-  "include": ["src"]
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "paths": {
+      "@base/*": ["./base/*"],
+      "@pages/*": ["./pom/pages/*"],
+      "@components/*": ["./pom/components/*"],
+      "@data/*": ["./data/*"],
+      "@preconditions/*": ["./utils/preconditions/*"]
+    }
+  }
 }
