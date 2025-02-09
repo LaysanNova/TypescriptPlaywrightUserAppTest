@@ -12,6 +12,5 @@ tests/.DS_Store
 /reports/
 
 .env
-
 des-help
 playwright.config.reena.ts
