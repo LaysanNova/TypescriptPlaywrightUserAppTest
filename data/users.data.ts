@@ -1,6 +1,6 @@
 export const users = [
     {
-        "firstName": "John Red",
+        "firstName": "John",
         "lastName": "Doe",
         "age": 35,
     },
@@ -20,3 +20,5 @@ export const users = [
         "age": 46,
     },
 ]
+
+export const uniqueFirstNameUser = users[0];
