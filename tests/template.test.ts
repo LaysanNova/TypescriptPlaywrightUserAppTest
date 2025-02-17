@@ -1,6 +1,6 @@
 import { test, expect, request, APIRequestContext} from "@playwright/test";
 import * as preconditions from "@preconditions/preconditions"
-import {users} from "@data/users.data";
+import { users } from "@data/users.data";
 
 test.describe('Test Suite Name', async() => {
     let apiRequest: APIRequestContext;

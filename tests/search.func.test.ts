@@ -1,8 +1,8 @@
-import { test, expect, request, APIRequestContext} from "@playwright/test";
+import { test, expect, request, APIRequestContext } from "@playwright/test";
 import * as preconditions from "@preconditions/preconditions";
 import * as usersData from "@data/users.data" ;
-import {HomePage} from "@pages/home.page";
-import {SearchPage} from "@pages/search.page";
+import { HomePage } from "@pages/home.page";
+import { SearchPage } from "@pages/search.page";
 
 
 test.describe('Should Search Users By Search Criteria', async () => {
