@@ -45,7 +45,7 @@ jobs:
         run: npx playwright test
         continue-on-error: true
         env:
-          URL: https://nodeexpressapi-n9sc.onrender.com/
+          URL: https://nodeexpressapi-n9sc.onrender.com
 
       - name: Attach Playwright report
         uses: actions/upload-artifact@v4
