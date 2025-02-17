@@ -24,9 +24,6 @@ export class Form {
 
         await Promise.all([
             this.firstNamePlaceholder.fill(firstName),
-            this.firstNamePlaceholder.dispatchEvent('input'),
-            this.firstNamePlaceholder.dispatchEvent('keyup'),
-            this.firstNamePlaceholder.dispatchEvent('change'),
             this.searchButton.isEnabled(),
           ])
     }
