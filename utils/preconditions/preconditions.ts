@@ -1,4 +1,4 @@
-import  { APIRequestContext} from "@playwright/test";
+import  { APIRequestContext } from "@playwright/test";
 import { API_USERS_ENDPOINT } from "@data/api.endpoints.data";
 
 export async function deleteUsers(request: APIRequestContext) {

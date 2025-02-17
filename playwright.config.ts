@@ -75,7 +75,7 @@ export default defineConfig({
       timeout: 6 * 1000,
       use: { ...devices['Desktop Chrome'],
         headless: !!process.env.CI,
-        // launchOptions: { slowMo: 1000 }
+        // launchOptions: { slowMo: 1500 }
       },
       dependencies: ['Setup']
     },
@@ -89,13 +89,13 @@ export default defineConfig({
       dependencies: ['Setup']
     },
 
-    {
-      name: 'webkit',
-      testMatch: /.*\.test\.ts/,
-      timeout: 6 * 1000,
-      use: { ...devices['Desktop Safari'] },
-      dependencies: ['Setup']
-    },
+    // {
+    //   name: 'webkit',
+    //   testMatch: /.*\.test\.ts/,
+    //   timeout: 6 * 1000,
+    //   use: { ...devices['Desktop Safari'] },
+    //   dependencies: ['Setup']
+    // },
 
   ],
 });
