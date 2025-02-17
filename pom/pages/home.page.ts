@@ -1,5 +1,5 @@
 import { Page, Locator } from '@playwright/test'
-import {Tab} from "@components/tab";
+import { Tab } from "@components/tab";
 
 export class HomePage {
     private readonly page: Page;
