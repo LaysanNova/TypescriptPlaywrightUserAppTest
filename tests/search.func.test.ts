@@ -78,7 +78,6 @@ test.describe('Should Search Users By Search Criteria', async () => {
         const expectedLastName = userWithUniqueFirstName.lastName;
         const expectedAge = userWithUniqueFirstName.age.toString();
         let actualUserInfo: string[];
-
         await new HomePage(page).tab.clickSearchTab();
 
         const searchPage = new SearchPage(page);
@@ -95,7 +94,21 @@ test.describe('Should Search Users By Search Criteria', async () => {
     })
 
     test('Search User With Non-Unique First Name', async({ page }) => {
+    })
 
+    test('Search User With Pavel', async({ page }) => {
+        await new HomePage(page).tab.clickSearchTab();
+        const searchPage = new SearchPage(page);
+        await searchPage.form.inputFirstName(usersData.uniqueFirstNameUser.firstName);
+        await searchPage.form.clickSearchButton();
+
+        await expect(searchPage.table.tableRow).toHaveCount(1);
+
+        const actualUserInfo = await searchPage.table.getFirstRowResultInfo();
+
+        expect(actualUserInfo[1]).toStrictEqual(usersData.uniqueFirstNameUser.firstName);
+        expect(actualUserInfo[2]).toStrictEqual(usersData.uniqueFirstNameUser.lastName);
+        expect(actualUserInfo[3]).toStrictEqual(usersData.uniqueFirstNameUser.age.toString());
     })
 
     test.afterEach('Close API request context', async () => {

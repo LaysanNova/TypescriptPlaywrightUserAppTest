@@ -23,12 +23,12 @@ export class Form {
             this.searchButton.isDisabled(),
             this.firstNamePlaceholder.isVisible(),
             this.firstNamePlaceholder.fill(firstName),
+            this.page.waitForLoadState("domcontentloaded"),
           ])
     }
 
     async clickSearchButton() {
         await Promise.all([
-            this.searchButton.waitFor({state: 'attached'}),
             this.searchButton.click()
         ])
     }
