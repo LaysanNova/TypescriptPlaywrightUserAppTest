@@ -72,7 +72,7 @@ export default defineConfig({
     {
       name: 'chromium',
       testMatch: /.*\.test\.ts/,
-      timeout: 10 * 1000,
+      timeout: 6 * 1000,
       use: { ...devices['Desktop Chrome'],
         headless: !!process.env.CI,
         // launchOptions: { slowMo: 1500 }
@@ -83,7 +83,7 @@ export default defineConfig({
     {
       name: 'firefox',
       testMatch: /.*\.test\.ts/,
-      timeout: 10 * 1000,
+      timeout: 6 * 1000,
       use: { ...devices['Desktop Firefox'],
       },
       dependencies: ['Setup']
