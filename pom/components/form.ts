@@ -20,7 +20,8 @@ export class Form {
         await Promise.all([
             new Table(this.page).tableRow.first().waitFor({state: 'attached'}),
             this.searchButton.isDisabled(),
-            this.firstNamePlaceholder.isVisible(),])
+            this.firstNamePlaceholder.isVisible(),
+        ])
 
         await Promise.all([
             this.firstNamePlaceholder.fill(firstName),
