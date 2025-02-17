@@ -1,5 +1,5 @@
-import {Page, Locator, expect} from "@playwright/test";
-import {Table} from "@components/table";
+import { Page, Locator } from "@playwright/test";
+import { Table } from "@components/table";
 
 
 export class Form {
@@ -14,7 +14,6 @@ export class Form {
 
         this.searchButton = this.page.getByRole('button', {name: 'Search', exact: true});
         this.firstNamePlaceholder = this.page.getByPlaceholder('Enter first name...');
-        //this.firstNamePlaceholder = this.page.locator('input[placeholder="Enter first name..."]');
     }
 
     async inputFirstName(firstName: string) {
