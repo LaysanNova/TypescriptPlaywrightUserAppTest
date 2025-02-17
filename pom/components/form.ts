@@ -13,17 +13,16 @@ export class Form {
         this.page = page;
 
         this.searchButton = this.page.getByRole('button', {name: 'Search', exact: true});
-        this.firstNamePlaceholder = this.page.getByPlaceholder('Enter first name...');
+        this.firstNamePlaceholder = this.page.locator( 'input[placeholder="Enter first name..."]');
     }
 
     async inputFirstName(firstName: string) {
         await Promise.all([
-           // this.page.waitForLoadState("domcontentloaded"),
             new Table(this.page).tableRow.first().waitFor({state: 'attached'}),
             this.searchButton.isDisabled(),
             this.firstNamePlaceholder.isVisible(),
-            this.firstNamePlaceholder.fill(firstName),
-            this.page.waitForLoadState("domcontentloaded"),
+            this.firstNamePlaceholder.fill(firstName, {timeout: 1000}),
+            this.searchButton.isEnabled(),
           ])
     }
 
