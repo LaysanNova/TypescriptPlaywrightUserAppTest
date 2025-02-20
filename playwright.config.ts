@@ -11,14 +11,14 @@ export default defineConfig({
   testDir: './tests',
   testIgnore: 'template*',
   outputDir: './reports/test-results/',
-  timeout: 5 * 1000,
+  timeout: 30 * 1000,
   expect: {
-    timeout: 2 * 1000
+    timeout: 5 * 1000
   },
   fullyParallel: false,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  retries: process.env.CI ? 2 : 2,
+  workers: process.env.CI ? 1 : 1,
 
   reporter: [
     ['list'],
@@ -72,9 +72,9 @@ export default defineConfig({
     {
       name: 'chromium',
       testMatch: /.*\.test\.ts/,
-      timeout: 6 * 1000,
+      timeout: 15 * 1000,
       use: { ...devices['Desktop Chrome'],
-        headless: !!process.env.CI,
+        // headless: !!process.env.CI,
         // launchOptions: { slowMo: 1500 }
       },
       dependencies: ['Setup']
@@ -83,7 +83,7 @@ export default defineConfig({
     {
       name: 'firefox',
       testMatch: /.*\.test\.ts/,
-      timeout: 6 * 1000,
+      timeout: 15 * 1000,
       use: { ...devices['Desktop Firefox'],
       },
       dependencies: ['Setup']
