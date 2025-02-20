@@ -21,6 +21,11 @@ jobs:
         with:
           node-version: lts/*
 
+      - name: pull node-express-api docker image
+        run: docker pull laysan/node-express-api
+      - name: docker run laysan/node-express-api
+        run: docker run -d -p 5000:5000 laysan/node-express-api
+
       - name: Install dependencies
         run: npm ci
 
