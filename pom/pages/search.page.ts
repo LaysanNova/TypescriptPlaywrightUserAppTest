@@ -1,6 +1,6 @@
-import { Page, Locator } from '@playwright/test'
-import { Form } from "@components/form";
-import { Table } from "@components/table";
+import {Page, Locator} from '@playwright/test'
+import {Form} from "@components/form";
+import {Table} from "@components/table";
 
 export class SearchPage {
     private readonly page: Page;
@@ -13,6 +13,4 @@ export class SearchPage {
         this.form = new Form(this.page);
         this.table = new Table(this.page);
     }
-
-
 }

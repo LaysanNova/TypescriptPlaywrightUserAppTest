@@ -1,16 +1,16 @@
-import { test, expect } from "@playwright/test";
+import {test, expect} from "@playwright/test";
 
 [
     {tabName: 'Add', expected: 'nav-link active'},
     {tabName: 'Search', expected: 'nav-link'},
-].forEach(({ tabName, expected}) => {
-    test.describe('Navigation tabs are available', async() => {
+].forEach(({tabName, expected}) => {
+    test.describe('Navigation tabs are available', async () => {
 
-        test.beforeEach('Navigate to home page url', async({ page }) => {
+        test.beforeEach('Navigate to home page url', async ({page}) => {
             await page.goto('/');
         })
 
-        test(`TC-NavBar-1: Verify ${tabName} Tab Load Correctly And Available`, async({ page }) => {
+        test(`TC-NavBar-1: Verify ${tabName} Tab Load Correctly And Available`, async ({page}) => {
             const tab = page.getByRole('link', {name: `${tabName}`, exact: true});
             const tabClassAttribute = await tab.getAttribute('class');
 

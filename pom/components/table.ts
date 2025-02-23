@@ -23,6 +23,4 @@ export class Table {
 
         return await this.tableRow.first().innerText().then(text => text.split("\t"));
     }
-
-
 }

@@ -12,4 +12,6 @@ tests/.DS_Store
 /reports/
 
 .env
-des-help
+file-help
+docker_commands
+.gitignore

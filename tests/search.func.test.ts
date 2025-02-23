@@ -1,8 +1,8 @@
-import { test, expect, request, APIRequestContext } from "@playwright/test";
+import {test, expect, request, APIRequestContext} from "@playwright/test";
 import * as preconditions from "@preconditions/preconditions";
 import * as usersData from "@data/users.data" ;
-import { HomePage } from "@pages/home.page";
-import { SearchPage } from "@pages/search.page";
+import {HomePage} from "@pages/home.page";
+import {SearchPage} from "@pages/search.page";
 
 
 test.describe('Should Search Users By Search Criteria', async () => {
@@ -30,7 +30,7 @@ test.describe('Should Search Users By Search Criteria', async () => {
     //     expect(expected).toBe(1);
     // })
 
-    test.beforeEach('Create API Request Context, Create Preconditions', async({ page }) => {
+    test.beforeEach('Create API Request Context, Create Preconditions', async ({page}) => {
         apiRequest = await request.newContext();
         await preconditions.deleteUsers(apiRequest);
         await preconditions.createUsers(apiRequest, usersData.users);
@@ -38,7 +38,7 @@ test.describe('Should Search Users By Search Criteria', async () => {
         await page.goto('/');
     })
 
-    test('Search User With Unique First Name - no POM', async({ page }) => {
+    test('Search User With Unique First Name - no POM', async ({page}) => {
         const userWithUniqueFirstName = usersData.users[0];
 
         const searchTab = page.getByRole('link', {name: 'Search', exact: true});
@@ -56,7 +56,7 @@ test.describe('Should Search Users By Search Criteria', async () => {
 
         await firstNamePlaceholder.fill(userWithUniqueFirstName.firstName);
 
-        await expect (searchButton).toBeEnabled();
+        await expect(searchButton).toBeEnabled();
         await searchButton.click();
 
         await expect(tableRow).toHaveCount(1);
@@ -72,7 +72,7 @@ test.describe('Should Search Users By Search Criteria', async () => {
     })
 
 
-    test('Search User With Unique First Name - POM v2', async({ page }) => {
+    test('Search User With Unique First Name - POM v2', async ({page}) => {
         const userWithUniqueFirstName = usersData.uniqueFirstNameUser;
         const expectedFirstName = userWithUniqueFirstName.firstName;
         const expectedLastName = userWithUniqueFirstName.lastName;
@@ -94,7 +94,8 @@ test.describe('Should Search Users By Search Criteria', async () => {
         expect(actualUserInfo[3]).toStrictEqual(expectedAge);
     })
 
-    test('Search User With Non-Unique First Name', async({ page }) => {
+    test('Search User With Non-Unique First Name', async ({page}) => {
+
     })
 
     test.afterEach('Close API request context', async () => {

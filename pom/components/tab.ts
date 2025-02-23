@@ -18,5 +18,4 @@ export class Tab {
             this.searchTab.click(),
         ])
     }
-
 }
