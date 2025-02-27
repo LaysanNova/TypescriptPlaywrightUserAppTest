@@ -44,6 +44,7 @@ test.describe('Validate edit button work correctly', async () => {
 
         await expect(editButton).toBeEnabled();
         await editButton.click();
+        await page.waitForLoadState('load')
 
         const userNewInfo = await searchPage.table.getFirstRowResultInfo();
 
@@ -69,7 +70,7 @@ test.describe('Validate edit button work correctly', async () => {
         await expect(editButton).toBeEnabled();
 
         await firstNamePlaceholder.fill("");
-        await expect(editButton).not.toBeEnabled();
+        await expect(editButton).toBeDisabled();
     })
 
     test.afterEach('Close API request context', async () => {
