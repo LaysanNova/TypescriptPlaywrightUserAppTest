@@ -45,7 +45,7 @@ test.describe('Test Suite Name', async () => {
 
         await expect(editButton).toBeEnabled();
         await editButton.click();
-        await page.waitForLoadState('load')
+        await page.waitForTimeout(1000);
 
         const userNewInfo = await searchPage.table.getFirstRowResultInfo();
 
@@ -71,7 +71,7 @@ test.describe('Test Suite Name', async () => {
         await expect(editButton).toBeEnabled();
 
         await firstNamePlaceholder.fill("");
-        await expect(editButton).not.toBeEnabled();
+        await expect(editButton).toBeDisabled();
     })
 
     test.afterEach('Close API request context', async () => {
