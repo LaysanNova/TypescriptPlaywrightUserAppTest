@@ -67,6 +67,7 @@ test.describe('Test Suite Name', async () => {
         await expect(editButton).toBeDisabled();
 
         await firstNamePlaceholder.fill("Something");
+        await page.waitForLoadState('domcontentloaded')
         await expect(editButton).toBeEnabled();
 
         await firstNamePlaceholder.fill("");
