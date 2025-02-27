@@ -45,6 +45,7 @@ test.describe('Test Suite Name', async () => {
 
         await expect(editButton).toBeEnabled();
         await editButton.click();
+        await page.waitForLoadState('domcontentloaded');
 
         const userNewInfo = await searchPage.table.getFirstRowResultInfo();
 
@@ -67,7 +68,6 @@ test.describe('Test Suite Name', async () => {
         await expect(editButton).toBeDisabled();
 
         await firstNamePlaceholder.fill("Something");
-        await page.waitForLoadState('domcontentloaded')
         await expect(editButton).toBeEnabled();
 
         await firstNamePlaceholder.fill("");
