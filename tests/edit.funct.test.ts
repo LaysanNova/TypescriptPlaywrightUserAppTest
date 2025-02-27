@@ -1,6 +1,6 @@
 import {test, expect, request, APIRequestContext, Locator} from "@playwright/test";
 import * as preconditions from "@preconditions/preconditions"
-import {users} from "@data/users.data";
+import {newName, users} from "@data/users.data";
 import * as usersData from "@data/users.data";
 import {HomePage} from "@pages/home.page";
 import {SearchPage} from "@pages/search.page";
@@ -41,16 +41,16 @@ test.describe('Test Suite Name', async () => {
         expect(actualLastName).toEqual(userInfo[2]);
         expect(actualAge).toEqual(userInfo[3]);
 
-        await firstNamePlaceholder.fill("Something");
+        await firstNamePlaceholder.fill(newName.firstName);
 
         await expect(editButton).toBeEnabled();
         await editButton.click();
-        await page.waitForLoadState('domcontentloaded');
+        await page.waitForLoadState('load')
 
         const userNewInfo = await searchPage.table.getFirstRowResultInfo();
 
         expect(userNewInfo[4]).toEqual(userInfo[4]);
-        expect(userNewInfo[1]).toEqual("Something");
+        expect(userNewInfo[1]).toEqual(newName.firstName);
         expect(userNewInfo[2]).toEqual(userInfo[2]);
         expect(userNewInfo[3]).toEqual(userInfo[3]);
 

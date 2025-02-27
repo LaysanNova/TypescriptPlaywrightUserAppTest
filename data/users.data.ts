@@ -21,4 +21,11 @@ export const users = [
     },
 ]
 
+export const newName =
+    {
+        "firstName": "Steve",
+        "lastName": "Dance",
+        "age": 60,
+    }
+
 export const uniqueFirstNameUser = users[0];
