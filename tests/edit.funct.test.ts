@@ -1,17 +1,16 @@
 import {test, expect, request, APIRequestContext, Locator} from "@playwright/test";
 import * as preconditions from "@preconditions/preconditions"
-import {newName, users} from "@data/users.data";
 import * as usersData from "@data/users.data";
 import {HomePage} from "@pages/home.page";
 import {SearchPage} from "@pages/search.page";
 
-test.describe('Test Suite Name', async () => {
+test.describe('Validate edit button work correctly', async () => {
     let apiRequest: APIRequestContext;
 
     test.beforeEach('Create API Request Context, Create Preconditions', async ({page}) => {
         apiRequest = await request.newContext();
         await preconditions.deleteUsers(apiRequest);
-        await preconditions.createUsers(apiRequest, users);
+        await preconditions.createUsers(apiRequest, usersData.users);
 
         await page.goto('/');
     })
@@ -41,16 +40,15 @@ test.describe('Test Suite Name', async () => {
         expect(actualLastName).toEqual(userInfo[2]);
         expect(actualAge).toEqual(userInfo[3]);
 
-        await firstNamePlaceholder.fill(newName.firstName);
+        await firstNamePlaceholder.fill(usersData.newName.firstName);
 
         await expect(editButton).toBeEnabled();
         await editButton.click();
-        await page.waitForLoadState('load')
 
         const userNewInfo = await searchPage.table.getFirstRowResultInfo();
 
         expect(userNewInfo[4]).toEqual(userInfo[4]);
-        expect(userNewInfo[1]).toEqual(newName.firstName);
+        expect(userNewInfo[1]).toEqual(usersData.newName.firstName);
         expect(userNewInfo[2]).toEqual(userInfo[2]);
         expect(userNewInfo[3]).toEqual(userInfo[3]);
 
