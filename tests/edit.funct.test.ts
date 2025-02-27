@@ -44,7 +44,6 @@ test.describe('Validate edit button work correctly', async () => {
 
         await expect(editButton).toBeEnabled();
         await editButton.click();
-        await page.waitForLoadState('load')
 
         const userNewInfo = await searchPage.table.getFirstRowResultInfo();
 
@@ -56,6 +55,7 @@ test.describe('Validate edit button work correctly', async () => {
     })
 
     test('Validate that edit button disabled with fields empty  - no POM', async ({page}) => {
+
         await new HomePage(page).tab.clickSearchTab();
         const editIcon = page.locator("#editIcon").first();
         const editButton = page.getByRole('button', {name: 'Edit', exact: true});
@@ -66,7 +66,7 @@ test.describe('Validate edit button work correctly', async () => {
         await expect(editButton).toBeVisible();
         await expect(editButton).toBeDisabled();
 
-        await firstNamePlaceholder.fill("Something");
+        await firstNamePlaceholder.fill(usersData.newName.firstName);
         await expect(editButton).toBeEnabled();
 
         await firstNamePlaceholder.fill("");
