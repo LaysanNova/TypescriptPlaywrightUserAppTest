@@ -85,8 +85,8 @@ export default defineConfig({
       testMatch: /.*\.test\.ts/,
       timeout: 20 * 1000,
       use: { ...devices['Desktop Firefox'],
-          headless: !!process.env.CI,
-          launchOptions: { slowMo: 1500 }
+          // headless: !!process.env.CI,
+          // launchOptions: { slowMo: 1500 }
       },
       dependencies: ['Setup']
     },
