@@ -72,8 +72,4 @@ test.describe('Validate edit button work correctly', async () => {
         await firstNamePlaceholder.fill("");
         await expect(editButton).toBeDisabled();
     })
-
-    test.afterEach('Close API request context', async () => {
-        await apiRequest.dispose();
-    })
 })

@@ -14,6 +14,7 @@ export const test = base.extend<MyFixtures>({
     forEachTest: [async ({page}, use) => {
         {
             await owner("LaysanNova");
+            await link("https://github.com/LaysanNova/NodeExpressAPI")
             await link("https://github.com/LaysanNova/TypescriptPlaywrightUserAppTest");
             await link("https://nodeexpressapi-n9sc.onrender.com");
         }

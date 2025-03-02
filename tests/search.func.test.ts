@@ -17,12 +17,6 @@ test.describe('Should Search Users By Search Criteria', async () => {
     })
 
     test('Search User With Unique First Name - no POM', async ({creatDB, page}) => {
-        await allureMeta(
-            description('This test verifies that the "Search" tab is accessible, allows user input, ' +
-                'enables the search button upon valid input, and correctly displays the searched user’s details ' +
-                'in the results table.')
-        )
-
         const userWithUniqueFirstName = usersData.users[0];
 
         const searchTab = page.getByRole('link', {name: 'Search', exact: true});
@@ -57,6 +51,12 @@ test.describe('Should Search Users By Search Criteria', async () => {
 
 
     test('Search User With Unique First Name - POM v2', async ({creatDB, page}) => {
+        await allureMeta(
+            description('This test verifies that the "Search" tab is accessible, allows user input, ' +
+                'enables the search button upon valid input, and correctly displays the searched user’s details ' +
+                'in the results table.')
+        )
+
         const userWithUniqueFirstName = usersData.uniqueFirstNameUser;
         const expectedFirstName = userWithUniqueFirstName.firstName;
         const expectedLastName = userWithUniqueFirstName.lastName;
