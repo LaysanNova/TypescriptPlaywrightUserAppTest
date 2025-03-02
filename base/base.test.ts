@@ -26,7 +26,7 @@ export const test = base.extend<MyFixtures>({
     }, {auto: true}],
 
     creatDB: [async ({request}, use) => {
-        await step('Delete DB if exist and Create new users DB.', async () => {
+        await step('Precondition - clear user DB, then create new users DB.', async () => {
             await preconditions.deleteUsers(request);
             await preconditions.createUsers(request, usersData.users);
         })
@@ -34,7 +34,7 @@ export const test = base.extend<MyFixtures>({
         await step('Post-condition: Dispose request.', async () => {
             await request.dispose();
         });
-    }, {auto: false, scope: "test", title: 'Precondition: Setup Data Base.' }],
+    }, {auto: false, scope: "test", title: 'Setup Data Base.' }],
 });
 
 
