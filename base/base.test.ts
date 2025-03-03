@@ -20,8 +20,8 @@ export const test = base.extend<MyFixtures>({
         }
 
         await step('Navigate to home page.', async () => {
+            await page.goto('/');
         });
-        await page.goto('/');
         await use();
     }, {auto: true}],
 
@@ -34,13 +34,13 @@ export const test = base.extend<MyFixtures>({
         await step('Post-condition: Dispose request.', async () => {
             await request.dispose();
         });
-    }, {auto: false, scope: "test", title: 'Setup Data Base.' }],
+    }, {auto: false, scope: "test", title: 'Setup Data Base.'}],
 });
 
 
-export { expect }  from "@playwright/test";
+export {expect} from "@playwright/test";
 
-export async function allureMeta(epic?: any, story?: any, tags?: any, Severity?: any, description?: any ) {
+export async function allureMeta(epic?: any, story?: any, tags?: any, Severity?: any, description?: any) {
     return await Promise.all([
         epic, story, tags, Severity, description
     ])

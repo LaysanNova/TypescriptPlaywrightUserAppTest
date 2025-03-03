@@ -12,9 +12,9 @@ test.describe('Should Search Users By Search Criteria', async () => {
             epic('FUN: Search User'),
             story('FUN-SEARCH: Search for User/Users using one or multiple criteria.'),
             tags('FUN', 'SEARCH'),
-            Severity.NORMAL
+            Severity.NORMAL,
         );
-    })
+    });
 
     test('Search User With Unique First Name - no POM', async ({creatDB, page}) => {
         const userWithUniqueFirstName = usersData.users[0];
@@ -49,7 +49,6 @@ test.describe('Should Search Users By Search Criteria', async () => {
         expect(actualUserInfo[3]).toStrictEqual(userWithUniqueFirstName.age.toString());
     })
 
-
     test('Search User With Unique First Name - POM v2', async ({creatDB, page}) => {
         await allureMeta(
             description('This test verifies that the "Search" tab is accessible, allows user input, ' +
@@ -78,9 +77,9 @@ test.describe('Should Search Users By Search Criteria', async () => {
         expect(actualUserInfo[3]).toStrictEqual(expectedAge);
     })
 
-    test('Search User With Non-Unique First Name', async ({page}) => {
-
-    })
+    // test('Search User With Non-Unique First Name', async () => {
+    //
+    // })
 
     // test.beforeEach('Create API Request Context, Create Preconditions', async({ page }) => {
     //     apiRequest = await request.newContext();
@@ -103,4 +102,4 @@ test.describe('Should Search Users By Search Criteria', async () => {
     //
     //     expect(expected).toBe(1);
     // })
-})
+});
