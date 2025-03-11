@@ -6,9 +6,8 @@
 
 Prerequisites:
 
-- *[JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)* as the programming language.
-- *[Node.js](https://nodejs.org/)* as the runtime environment.
-- *[Express.js](https://expressjs.com/)* as the web framework.
+- *[Node.js](https://nodejs.org)* (Latest LTS version recommended)
+- *[npm](https://www.npmjs.com/)*
 
 ## Installation and Setup
 ### 1. Clone the Repository
@@ -38,5 +37,3 @@ npx playwright test --headed
 - HTML
 - Allure
 - etc..
-
-
