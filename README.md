@@ -37,5 +37,3 @@ npx playwright test --headed
 - HTML
 - Allure
 - etc..
-
-
