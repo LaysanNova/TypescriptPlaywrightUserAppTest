@@ -1,81 +1,75 @@
-import {test, expect, allureMeta} from "@base/base.test"
-import * as usersData from "@data/users.data" ;
-import {step, description, epic, Severity, story, tags} from "allure-js-commons";
+import {test, expect, request, APIRequestContext, Locator} from "@playwright/test";
+import * as preconditions from "@preconditions/preconditions"
+import * as usersData from "@data/users.data";
+import {HomePage} from "@pages/home.page";
+import {SearchPage} from "@pages/search.page";
 
 test.describe('Validate edit button work correctly', async () => {
+    let apiRequest: APIRequestContext;
 
-    test.beforeEach('Create API Request Context, Create Preconditions', async () => {
-        await allureMeta(
-            epic('FUN: Search User'),
-            story('FUN-SEARCH: Search for User/Users using one or multiple criteria.'),
-            tags('FUN', 'SEARCH'),
-            Severity.NORMAL,
-        );
-    });
+    test.beforeEach('Create API Request Context, Create Preconditions', async ({page}) => {
+        apiRequest = await request.newContext();
+        await preconditions.deleteUsers(apiRequest);
+        await preconditions.createUsers(apiRequest, usersData.users);
 
-    test('Edit functionality: Edit user first name', async ({creatDB, editPage}) => {
+        await page.goto('/');
+    })
 
-        let userInfo: string[] = [];
-        let userNewInfo: string[] = [];
+    test('Edit user first name - no POM', async ({page}) => {
+        await new HomePage(page).tab.clickSearchTab();
+        const searchPage = new SearchPage(page);
+        const editIcon = page.locator("#editIcon").first();
+        const editButton = page.getByRole('button', {name: 'Edit', exact: true});
 
-        let idPlaceholderValue: string | null = "";
-        let firstNamePlaceholderValue: string | null = "";
-        let lastNamePlaceholderValue: string | null = "";
-        let agePlaceholderValue: string | null = "";
+        const userIdPlaceholder = page.getByTestId('userId');
+        const firstNamePlaceholder = page.getByTestId('firstName');
+        const lastNamePlaceholder = page.getByTestId('lastName');
+        const agePlaceholder = page.getByTestId('age');
 
-        await step('Collect Actual user Info: Collect user info of the first row.', async () => {
-            userInfo = await editPage.table.getFirstRowResultInfo();
-        });
+        const userInfo = await searchPage.table.getFirstRowResultInfo();
 
-        await step('Collecting placeholder values on the form for editing.', async () => {
-            idPlaceholderValue = await editPage.form.getPlaceholderValue("userId");
-            firstNamePlaceholderValue = await editPage.form.getPlaceholderValue("firstName");
-            lastNamePlaceholderValue = await editPage.form.getPlaceholderValue("lastName");
-            agePlaceholderValue = await editPage.form.getPlaceholderValue("age");
-        });
+        await editIcon.first().click();
 
-        await step('Expect: The id placeholder contains id of the first table row.', async () => {
-            expect(idPlaceholderValue).toEqual(userInfo[4]);
-        });
+        const actualUserId = await userIdPlaceholder.getAttribute('placeholder');
+        const actualFirstName = await firstNamePlaceholder.getAttribute('placeholder');
+        const actualLastName = await lastNamePlaceholder.getAttribute('placeholder');
+        const actualAge = await agePlaceholder.getAttribute('placeholder');
 
-        await step('Expect: The first name placeholder contains first name of the first table row.', async () => {
-            expect(firstNamePlaceholderValue).toEqual(userInfo[1]);
-        });
+        expect(actualUserId).toEqual(userInfo[4]);
+        expect(actualFirstName).toEqual(userInfo[1]);
+        expect(actualLastName).toEqual(userInfo[2]);
+        expect(actualAge).toEqual(userInfo[3]);
 
-        await step('Expect: The last name placeholder contains last name of the first table row.', async () => {
-            expect(lastNamePlaceholderValue).toEqual(userInfo[2]);
-        });
+        await firstNamePlaceholder.fill(usersData.newName.firstName);
 
-        await step('Expect: The age placeholder contains age of the first table row.', async () => {
-            expect(agePlaceholderValue).toEqual(userInfo[3]);
-        });
+        await expect(editButton).toBeEnabled();
+        await editButton.click();
 
-        await step('Edit: Enter new first name in the form.', async () => {
-            await editPage.form.fillPlaceholder("firstName", usersData.newName.firstName);
-        });
+        const userNewInfo = await searchPage.table.getFirstRowResultInfo();
 
-        await step('Click "Edit Button".', async () => {
-            await editPage.form.clickEditButton();
-        });
+        expect(userNewInfo[4]).toEqual(userInfo[4]);
+        expect(userNewInfo[1]).toEqual(usersData.newName.firstName);
+        expect(userNewInfo[2]).toEqual(userInfo[2]);
+        expect(userNewInfo[3]).toEqual(userInfo[3]);
 
-        await step('Collect Actual user Info: Collect user info of the first row after editing.', async () => {
-            userNewInfo = await editPage.table.getFirstRowResultInfo();
-        });
+    })
 
-        await step('Expect: The id has not been changed.', async () => {
-            expect(userNewInfo[4]).toEqual(userInfo[4]);
-        });
+    test('Validate that edit button disabled with fields empty - no POM', async ({page}) => {
 
-        await step(`Expect: The first name changed to '${usersData.newName.firstName}'.`, async () => {
-            expect(userNewInfo[1]).toEqual(usersData.newName.firstName);
-        });
+        await new HomePage(page).tab.clickSearchTab();
+        const editIcon = page.locator("#editIcon").first();
+        const editButton = page.getByRole('button', {name: 'Edit', exact: true});
 
-        await step('Expect: The last name has not been changed.', async () => {
-            expect(userNewInfo[2]).toEqual(userInfo[2]);
-        });
+        const firstNamePlaceholder = page.getByTestId('firstName');
+        await editIcon.first().click();
 
-        await step('Expect: The age has not been changed.', async () => {
-            expect(userNewInfo[3]).toEqual(userInfo[3]);
-        });
+        await expect(editButton).toBeVisible();
+        await expect(editButton).toBeDisabled();
+
+        await firstNamePlaceholder.fill(usersData.newName.firstName);
+        await expect(editButton).toBeEnabled();
+
+        await firstNamePlaceholder.fill("");
+        await expect(editButton).toBeDisabled();
     })
 })
