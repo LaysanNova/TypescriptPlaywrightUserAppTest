@@ -62,7 +62,7 @@ test.describe('Validate edit button work correctly', async () => {
             userNewInfo = await editPage.table.getFirstRowResultInfo();
         });
 
-        await step('Expect: The id have not been changed.', async () => {
+        await step('Expect: The id has not been changed.', async () => {
             expect(userNewInfo[4]).toEqual(userInfo[4]);
         });
 
@@ -70,11 +70,11 @@ test.describe('Validate edit button work correctly', async () => {
             expect(userNewInfo[1]).toEqual(usersData.newName.firstName);
         });
 
-        await step('Expect: The last name have not been changed.', async () => {
+        await step('Expect: The last name has not been changed.', async () => {
             expect(userNewInfo[2]).toEqual(userInfo[2]);
         });
 
-        await step('Expect: The age have not been changed.', async () => {
+        await step('Expect: The age has not been changed.', async () => {
             expect(userNewInfo[3]).toEqual(userInfo[3]);
         });
     })
