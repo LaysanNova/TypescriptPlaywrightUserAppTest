@@ -1,8 +1,6 @@
 import {test, expect, allureMeta} from "@base/base.test"
 import * as usersData from "@data/users.data" ;
-import {HomePage} from "@pages/home.page";
-import {SearchPage} from "@pages/search.page";
-import {description, epic, Severity, story, tags} from "allure-js-commons";
+import {description, epic, Severity, step, story, tags} from "allure-js-commons";
 
 
 test.describe('Should Search Users By Search Criteria', async () => {
@@ -16,7 +14,7 @@ test.describe('Should Search Users By Search Criteria', async () => {
         );
     });
 
-    test('Search User With Unique First Name - no POM', async ({creatDB, page}) => {
+    test('Search User With Unique First Name - no fixture no POM', async ({creatDB, page}) => {
         const userWithUniqueFirstName = usersData.users[0];
 
         const searchTab = page.getByRole('link', {name: 'Search', exact: true});
@@ -49,7 +47,7 @@ test.describe('Should Search Users By Search Criteria', async () => {
         expect(actualUserInfo[3]).toStrictEqual(userWithUniqueFirstName.age.toString());
     })
 
-    test('Search User With Unique First Name - POM v2', async ({creatDB, page}) => {
+    test('Search User With Unique First Name using fixtures - POM', async ({creatDB, searchPage}) => {
         await allureMeta(
             description('This test verifies that the "Search" tab is accessible, allows user input, ' +
                 'enables the search button upon valid input, and correctly displays the searched user’s details ' +
@@ -60,46 +58,35 @@ test.describe('Should Search Users By Search Criteria', async () => {
         const expectedFirstName = userWithUniqueFirstName.firstName;
         const expectedLastName = userWithUniqueFirstName.lastName;
         const expectedAge = userWithUniqueFirstName.age.toString();
-        let actualUserInfo: string[];
+        let actualUserInfo: string[] = [];
 
-        await new HomePage(page).tab.clickSearchTab();
+        await step(`2. Input '${userWithUniqueFirstName.firstName}' into "First Name field"`, async () => {
+            await searchPage.form.inputFirstName(userWithUniqueFirstName.firstName);
+        });
 
-        const searchPage = new SearchPage(page);
-        await searchPage.form.inputFirstName(userWithUniqueFirstName.firstName);
-        await searchPage.form.clickSearchButton();
+        await step('3. Click "Search" button when enabled.', async () => {
+            await searchPage.form.clickSearchButton();
+        });
 
-        await expect(searchPage.table.tableRow).toHaveCount(1);
+        await step('Expect: The number of users displayed in search results is 1.', async () => {
+            await expect(searchPage.table.tableRow).toHaveCount(1);
+        });
 
-        actualUserInfo = await searchPage.table.getFirstRowResultInfo();
+        await step('Collect Actual user Info: Collect user info the singles search result.', async () => {
+            actualUserInfo = await searchPage.table.getFirstRowResultInfo();
+        });
 
-        expect(actualUserInfo[1]).toStrictEqual(expectedFirstName);
-        expect(actualUserInfo[2]).toStrictEqual(expectedLastName);
-        expect(actualUserInfo[3]).toStrictEqual(expectedAge);
+        await step(`Expect: Actual first name '${actualUserInfo[1]}' in the search result matches the expected first name '${expectedFirstName}'.`, async () => {
+            expect(actualUserInfo[1]).toStrictEqual(expectedFirstName);
+        });
+
+        await step(`Expect: Actual first name '${actualUserInfo[2]}' in the search result matches the expected first name '${expectedLastName}'.`, async () => {
+            expect(actualUserInfo[2]).toStrictEqual(expectedLastName);
+
+        });
+
+        await step(`Expect: Actual first name '${actualUserInfo[3]}' in the search result matches the expected first name '${expectedAge}'.`, async () => {
+            expect(actualUserInfo[3]).toStrictEqual(expectedAge);
+        });
     })
-
-    // test('Search User With Non-Unique First Name', async () => {
-    //
-    // })
-
-    // test.beforeEach('Create API Request Context, Create Preconditions', async({ page }) => {
-    //     apiRequest = await request.newContext();
-    //     await preconditions.deleteUsers(apiRequest);
-    //     await preconditions.createUsers(apiRequest);
-    //
-    //     await page.goto('/');
-    // })
-    //
-    // test('Search User With Unique First Name', async({ page }) => {
-    //     test.slow()
-    //     const userJohn = users[0];
-    //     await new HomePage(page).clickSearchTab();
-    //
-    //     const searchPage = new SearchPage(page);
-    //     await searchPage.inputFirstName(userJohn.firstName);
-    //     await searchPage.clickSearchButton();
-    //
-    //     const expected = await searchPage.getTbodyRowCounts()
-    //
-    //     expect(expected).toBe(1);
-    // })
 });

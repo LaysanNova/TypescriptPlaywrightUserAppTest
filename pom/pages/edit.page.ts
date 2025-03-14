@@ -12,6 +12,4 @@ export class EditPage {
         this.form = new Form(this.page);
         this.table = new Table(this.page);
     }
-
-
 }
