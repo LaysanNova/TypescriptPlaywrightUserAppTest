@@ -2,6 +2,7 @@ import {test, expect, allureMeta} from "@base/base.test"
 import * as usersData from "@data/users.data" ;
 import {step, description, epic, Severity, story, tags} from "allure-js-commons";
 
+
 test.describe('Validate edit button work correctly', async () => {
 
     test.beforeEach('Create API Request Context, Create Preconditions', async () => {
@@ -13,10 +14,57 @@ test.describe('Validate edit button work correctly', async () => {
         );
     });
 
-    test('Edit functionality: Edit user first name', async ({creatDB, editPage}) => {
+    [
+        { placeholder: "firstName", value: usersData.newName.firstName, index: 1 },
+        { placeholder: "lastName", value: usersData.newName.lastName, index: 2 },
+        { placeholder: "age", value: usersData.newName.age, index: 3 },
+    ].forEach(({placeholder, value, index}) => {
 
+    test(`Edit functionality: Edit user "${placeholder}" placeholder by ${value} `, async ({creatDB, editPage}) => {
+
+        let stringValue = value.toString();
         let userInfo: string[] = [];
         let userNewInfo: string[] = [];
+
+        await step('Collect Actual user Info: Collect user info of the first row.', async () => {
+            userInfo = await editPage.table.getFirstRowResultInfo();
+        });
+
+        userInfo[index] = stringValue;
+
+        await step(`Edit: Enter new ${placeholder} = "${value}" in the form.`, async () => {
+            await editPage.form.fillPlaceholder(placeholder, stringValue);
+        });
+
+        await step('Click "Edit Button".', async () => {
+            await editPage.form.clickEditButton();
+        });
+
+        await step('Collect Actual user Info: Collect user info of the first row after editing.', async () => {
+            userNewInfo = await editPage.table.getFirstRowResultInfo();
+        });
+
+        await step(`Expect: id has not been changed.`, async () => {
+            expect(userNewInfo[4]).toEqual(userInfo[4]);
+        });
+
+        await step(`Expect: first name ${userNewInfo[1]} = ${userInfo[1]}.`, async () => {
+            expect(userNewInfo[1]).toEqual(userInfo[1]);
+        });
+
+        await step(`Expect: The last name ${userNewInfo[2]} = ${userInfo[2]}.`, async () => {
+            expect(userNewInfo[2]).toEqual(userInfo[2]);
+        });
+
+        await step(`Expect: The age ${userNewInfo[3]} = ${userInfo[3]}.`, async () => {
+            expect(userNewInfo[3]).toEqual(userInfo[3]);
+        });
+    })
+    })
+
+    test(`Validate 'edit icon' works correctly`, async ({creatDB, editPage}) => {
+
+        let userInfo: string[] = [];
 
         let idPlaceholderValue: string | null = "";
         let firstNamePlaceholderValue: string | null = "";
@@ -49,37 +97,9 @@ test.describe('Validate edit button work correctly', async () => {
         await step('Expect: The age placeholder contains age of the first table row.', async () => {
             expect(agePlaceholderValue).toEqual(userInfo[3]);
         });
-
-        await step('Edit: Enter new first name in the form.', async () => {
-            await editPage.form.fillPlaceholder("firstName", usersData.newName.firstName);
-        });
-
-        await step('Click "Edit Button".', async () => {
-            await editPage.form.clickEditButton();
-        });
-
-        await step('Collect Actual user Info: Collect user info of the first row after editing.', async () => {
-            userNewInfo = await editPage.table.getFirstRowResultInfo();
-        });
-
-        await step('Expect: The id has not been changed.', async () => {
-            expect(userNewInfo[4]).toEqual(userInfo[4]);
-        });
-
-        await step(`Expect: The first name changed to '${usersData.newName.firstName}'.`, async () => {
-            expect(userNewInfo[1]).toEqual(usersData.newName.firstName);
-        });
-
-        await step('Expect: The last name has not been changed.', async () => {
-            expect(userNewInfo[2]).toEqual(userInfo[2]);
-        });
-
-        await step('Expect: The age has not been changed.', async () => {
-            expect(userNewInfo[3]).toEqual(userInfo[3]);
-        });
     })
 
-    test('Validate that "Edit Button" disabled with fields empty', async ({creatDB, editPage}) => {
+    test('Validate that "Edit Button" get disabled with fields empty', async ({creatDB, editPage}) => {
 
         let editButton = editPage.form.editButton;
 
@@ -95,7 +115,6 @@ test.describe('Validate edit button work correctly', async () => {
         await step('Expect: "Edit Button" is available.', async () => {
             await expect(editButton).toBeEnabled();
         });
-
 
         await step('Edit: Remove first name in the form.', async () => {
             await editPage.form.fillPlaceholder("firstName", "");
